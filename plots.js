@@ -1,29 +1,23 @@
 d3.json("data/data.json").then((importedData) => {
     let data = importedData;
-
-    //sort
-    data.sort((a,b) => parseFloat(b.greekSearchResults - a.greekSearchResults));
-
-    //slice
-    data = data.slice(0,10);
-
-    //reverse array for horizontal line chart
+    // sort data
+    data.sort((a, b) => parseFloat(b.greekSearchResults) - parseFloat(a.greekSearchResults));
+    // slice the top 10 entries
+    data = data.slice(0, 10);
+    // reverse array order
     data = data.reverse();
-
     let labels = data.map(row => row.greekName);
-
     let trace = {
         x: data.map(row => row.greekSearchResults),
         y: labels,
+        text: labels,
         name: "Greek",
         type: "bar",
         orientation: "h"
     };
-
     let chartData = [trace];
-
     let layout = {
-        title: "greek gods search results",
+        title: "Greek Gods Search Results",
         margin: {
             l: 100,
             r: 100,
@@ -31,6 +25,5 @@ d3.json("data/data.json").then((importedData) => {
             b: 100
         }
     };
-    Plotly.newPlot('plots', chartData, layout)
-
+    Plotly.newPlot('plot', chartData, layout);
 });
